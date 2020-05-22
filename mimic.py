@@ -47,23 +47,25 @@ def create_mimic_dict(filename):
     with open(filename, "r") as f:
         # print(type((f.read().split())))
         mimic_list = [word for word in f.read().split()]
-    print(mimic_list)
+
+    # print(mimic_list)
 
     mimic_dict = {}
+    mimic_dict[""] = mimic_list[0]
 
     for index, word in enumerate(mimic_list):
         if index+1 == len(mimic_list):
             break
 
-        print(index)
+        # print(index)
 
         if word not in mimic_dict:
             mimic_dict[word] = [mimic_list[index+1]]
 
         elif word in mimic_dict:
-            mimic_dict[word] = [*mimic_dict[word], mimic_list[index+1]]
+            mimic_dict[word].append(mimic_list[index+1])
 
-    print(mimic_dict)
+    print(f"mimic_dict: {mimic_dict}")
     return mimic_dict
 
 
@@ -78,11 +80,35 @@ def print_mimic(mimic_dict, start_word):
         - Randomly select a new word from the next-list
         - Repeat this process 200 times
     """
-    # +++your code here+++
-    pass
+
+    #print(mimic_dict.get(start_word, f"{start_word} not found in dictionary"))
+
+    # print("")
+    # if start_word not in mimic_dict:
+    #     return
+
+    result = [random.choice(mimic_dict[start_word])]
+
+    start_words = list(mimic_dict.keys())
+    start_word = start_word
+
+    # start word is random and use as key
+    for _ in range(200):
+        print(start_word)
+        result = [
+            *result, random.choice(mimic_dict[random.choice(start_words)])]
+        # print(random.choice(mimic_dict[random.choice(start_words)]))
+
+    print(" ".join(result))
+
+
+# print_mimic(create_mimic_dict("imdev.txt"), "I")
+# print_mimic(create_mimic_dict("imdev.txt"), "pizza")
 
 
 # Provided main(), calls mimic_dict() and print_mimic()
+
+
 def main():
     if len(sys.argv) != 2:
         print('usage: python mimic.py file-to-read')
