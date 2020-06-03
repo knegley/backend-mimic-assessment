@@ -60,11 +60,8 @@ def create_mimic_dict(filename):
 
         elif word in mimic_dict:
             mimic_dict[word].append(mimic_list[index+1])
-
+    print(mimic_dict)
     return mimic_dict
-
-
-create_mimic_dict("imdev.txt")
 
 
 def print_mimic(mimic_dict, start_word):
